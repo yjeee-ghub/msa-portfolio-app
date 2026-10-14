@@ -1,0 +1,15 @@
+2차 배포 수정 내역
+
+- ECR 계정 ID를 현재 실습 계정 193644343848으로 통일
+- GitHub Actions REGISTRY 및 5개 Deployment image 주소 수정
+- member-service에 spring-security-crypto 의존성 추가
+- API Gateway 기본 Profile을 prod로 변경
+- member/product/ordering:
+  spring.jpa.generate-ddl: false
+  spring.jpa.hibernate.ddl-auto: none
+  -> Pod 재생성/재배포 시 Hibernate가 테이블을 생성하거나 변경하지 않음
+  -> 기존 RDS 테이블/데이터를 그대로 사용
+- ingress_without_gateway.yml rewrite 규칙 수정
+
+주의:
+ddl-auto: none은 기존 DB 테이블이 이미 만들어져 있다는 전제입니다.

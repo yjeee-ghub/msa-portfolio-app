@@ -1,0 +1,40 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: order-backend-ingress
+  namespace: soldesk
+  annotations:
+    kubernetes.io/ingress.class: nginx
+    cert-manager.io/cluster-issuer: my-issuer
+    nginx.ingress.kubernetes.io/use-regex: "true"
+    nginx.ingress.kubernetes.io/rewrite-target: /$2 # 첫 번째 prefix 제거
+spec:
+  tls:
+  - hosts:
+    - "server.aws-yjeee.com"
+    secretName: server-aws-yjeee-com-tls
+  rules:
+  - host: server.aws-yjeee.com  # 설정하려는 도메인 이름. 제외시에 elb주소로도 접근할수 있는 모든 도메인 접근 가능.
+    http:
+      paths:
+      - path: /member-service(/|$)(.*) #모든 url요청을 nginx-service로 라우팅
+        pathType: ImplementationSpecific
+        backend:
+          service:
+            name: member-service
+            port:
+              number: 80
+      - path: /ordering-service(/|$)(.*) #모든 url요청을 nginx-service로 라우팅
+        pathType: ImplementationSpecific
+        backend:
+          service:
+            name: ordering-service
+            port:
+              number: 80
+      - path: /product-service(/|$)(.*) #모든 url요청을 nginx-service로 라우팅
+        pathType: ImplementationSpecific
+        backend:
+          service:
+            name: product-service
+            port:
+              number: 80
