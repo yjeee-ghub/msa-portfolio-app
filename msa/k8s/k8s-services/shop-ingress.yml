@@ -1,0 +1,47 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: shop-ingress
+  namespace: soldesk
+  annotations:
+    cert-manager.io/cluster-issuer: my-issuer
+    nginx.ingress.kubernetes.io/proxy-body-size: "20m"
+    nginx.ingress.kubernetes.io/ssl-redirect: "true"
+spec:
+  ingressClassName: nginx
+  tls:
+    - hosts:
+        - shop.aws-yjeee.com
+      secretName: shop-aws-yjeee-com-tls
+  rules:
+    - host: shop.aws-yjeee.com
+      http:
+        paths:
+          - path: /member-service
+            pathType: Prefix
+            backend:
+              service:
+                name: apigateway-service
+                port:
+                  number: 80
+          - path: /product-service
+            pathType: Prefix
+            backend:
+              service:
+                name: apigateway-service
+                port:
+                  number: 80
+          - path: /ordering-service
+            pathType: Prefix
+            backend:
+              service:
+                name: apigateway-service
+                port:
+                  number: 80
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: frontend-service
+                port:
+                  number: 80

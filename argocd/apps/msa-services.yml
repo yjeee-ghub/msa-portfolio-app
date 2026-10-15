@@ -9,6 +9,8 @@ spec:
     repoURL: https://github.com/yjeee-ghub/msa-portfolio-app.git
     targetRevision: main
     path: msa/k8s/k8s-services
+    directory:
+      exclude: ingress.yml
   destination:
     server: https://kubernetes.default.svc
     namespace: soldesk
