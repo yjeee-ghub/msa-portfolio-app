@@ -163,7 +163,7 @@ jobs:
 
       # Product 빌드
       - name: product build and push docker image to ecr
-        if: false
+        if: success()
         env:
           REGISTRY: 193644343848.dkr.ecr.ap-northeast-2.amazonaws.com
           REPOSITORY: product-service
