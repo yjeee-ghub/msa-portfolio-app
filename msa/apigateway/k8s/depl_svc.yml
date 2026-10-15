@@ -1,4 +1,4 @@
-apiVersion: apps/v1
+yapiVersion: apps/v1
 kind: Deployment
 metadata:
   name: apigateway-depl
@@ -29,7 +29,7 @@ spec:
             memory: "500Mi"
         # 컨테이너가 시작될떄 보장받아야 하는 최소 자원
           requests:
-            cpu: "0.5"
+            cpu: "0.1"
             memory: "250Mi"
  
 ---
